@@ -12,18 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('child_full_name', 100); // Ф.И.О. ребенка (только кириллица)
-            $table->tinyInteger('child_age'); // Возраст ребенка (1-2 цифры)
-            $table->enum('child_gender', ['Ж', 'М']); // Пол ребенка
-            $table->enum('child_status', ['Ребёнок-инвалид', 'Ребёнок с ОВЗ']); // Статус ребенка
-            $table->string('pmpk_code', 10)->nullable(); // Шифр по ПМПК (только если ребенок с ОВЗ)
-            $table->string('educational_organization', 500); // Образовательная организация
-            $table->string('parent_full_name', 100); // Ф.И.О. родителя/законного представителя
-            $table->string('phone_number', 20); // Номер телефона
-            $table->string('email', 256)->unique(); // Электронная почта
+            $table->id(); 
+            $table->string('full_name'); 
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable(); 
+            $table->string('password'); 
+            $table->string('phone_number');
+            $table->string('educational_organization')->nullable();
+            $table->rememberToken(); 
             $table->timestamps();
         });
+        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
