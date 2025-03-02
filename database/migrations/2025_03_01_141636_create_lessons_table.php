@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained()->onDelete('cascade'); // Связь с курсом
-            $table->string('title'); // Название урока
-            $table->text('description')->nullable(); // Описание урока
-            $table->string('video_url'); // Ссылка на видеоурок (Rutube)
-            $table->string('materials_file')->nullable(); // Файл с методическими материалами (PDF)
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->integer('order');
+            $table->timestamp('available_at')->nullable();
             $table->timestamps();
         });
     }

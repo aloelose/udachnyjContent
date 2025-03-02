@@ -46,7 +46,7 @@ class RegisterController extends Controller
         }
     
         // Генерация случайного пароля
-        $password = Str::random(12);
+        $password = Str::random(8);
     
         // Создание нового пользователя
         $user = User::create([
