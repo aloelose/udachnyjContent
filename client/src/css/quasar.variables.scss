@@ -1,0 +1,94 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+$typography-font-family: "Involve", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+
+$primary   : #315720; // дублирует $green
+$secondary : #26A69A;
+$accent    : #9C27B0;
+
+$dark      : #1D1D1D;
+$dark-page : #121212;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+
+$dark_green: #1F3613;
+$green: #315720;
+$light_yellow:#FBFBF1;
+$light_green: #829F4F;
+$fon:#EFDFBB;
+$button_fon: #F8CB96;
+$button_text: #A27D54;
+
+//?? 
+$skyblue: #D0E7F1;
+$verylightbrown: #FBFBF1;
+// remake
+$uc_dark_green: #1F3613;
+$uc_green: #315720;
+$uc_light_yellow:#FBFBF1;
+$uc_light_green: #829F4F;
+$uc_fon: #EFDFBB;
+$uc_button_text: #A27D54;
+// quasar-like добавление цветов
+.text-uc_dark_green {
+    color: $uc_dark_green !important;
+}
+.bg-uc_dark_green {
+    background: $uc_dark_green !important;
+}
+.text-uc_green {
+    color: $uc_green !important;
+}
+.bg-uc_green {
+    background: $uc_green !important;
+}
+.text-light_yellow {
+    color: $light_yellow !important;
+}
+.bg-light_yellow {
+    background: $light_yellow !important;
+}
+.text-uc_light_green {
+    color: $uc_light_green !important;
+}
+.bg-uc_light_green {
+    background: $uc_light_green !important;
+}
+.text-uc_light_green {
+    color: $uc_light_green !important;
+}
+.bg-uc_light_green {
+    background: $uc_light_green !important;
+}
+.text-uc_fon {
+    color: $uc_fon !important;
+}
+.bg-uc_fon {
+    background: $uc_fon !important;
+}
+.text-uc_button_text {
+    color: $uc_button_text !important;
+}
+.bg-uc_button_text {
+    background: $uc_button_text !important;
+}
+
+// медиазапросы
+
+$media-l: 1024px;
+$media-m: 768px;
+$media-s: 576px;

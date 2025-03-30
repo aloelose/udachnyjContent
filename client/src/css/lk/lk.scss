@@ -1,0 +1,93 @@
+@import 'src/css/mixins.scss';
+
+.lk {
+    padding-bottom: 80px;
+
+    @media (max-width: 576px) {
+        padding-bottom: 60px;
+    }
+
+    &-layout {
+        background: linear-gradient(180deg, #D0E7F1 0%, #EFDFBB 22.71%);
+
+        main {
+            background-image: url('src/assets/images/lk/lk-bg.svg');
+            background-position: top right;
+            background-repeat: repeat;
+
+            @media (max-width: $media-m) {
+                background-image: url('src/assets/images/lk/lk-bg-tablet.webp');
+                background-size: 100%;
+                background-position: top;
+            }
+        }
+    }
+
+    .tabs {
+        &__container {
+            display: flex;
+            gap: 24px;
+            overflow: auto;
+
+            @media (max-width: 576px) {
+                gap: 16px;
+            }
+        }
+    }
+
+    &__tabs {
+        padding: 20px 0;
+        border-bottom: 1px solid $green;
+        
+    }
+
+    &__tab {
+        padding: 16px 24px;
+        @include desktop-text_bold_20;
+        border-radius: 20px;
+        color: $button_text;
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+
+        @media (max-width: $media-m) {
+            padding: 14px 22px;
+            @include tablet-text_bold_18;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 576px) {
+            padding: 12px 20px;
+            @include phone-bold_16;
+        }
+
+        @media (max-width: 420px) {
+            padding: 12px 12px;
+            @include phone-bold_16;
+        }
+
+        @media (max-width: 368px) {
+            padding: 10px 10px;
+            @include phone-bold_16;
+        }
+
+        @media (max-width: 358px) {
+            padding: 10px 8px;
+            @include phone-bold_16;
+        }
+
+        &.active {
+            border: 2px dotted $button_text;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        @media (max-width: 576px) {
+            gap: 20px;
+        }
+    }
+}

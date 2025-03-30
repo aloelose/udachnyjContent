@@ -27,4 +27,15 @@ class UserController extends Controller
 
         return response()->json($child);
     }
+    public function getInfo()
+    {
+        $user = Auth::user();
+        $child = Child::where('user_id', $user->id)->first();
+        $info = [
+            'user' => $user,
+            'child' => $child ? $child : null,
+        ];
+        return response()->json($info);
+    }
+
 }

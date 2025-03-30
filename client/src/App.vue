@@ -1,21 +1,7 @@
 <template>
-  <div>
-    <router-link to="/" class="link">Home</router-link> |
-    <router-link to="/login" class="link">Login</router-link> |
-    <router-link to="/register" class="link">Register</router-link> |
-    <router-link to="/logout" class="link">Logout</router-link>
-
-    <router-view></router-view>
-  </div>
+  <router-view />
 </template>
 
-<style>
-.link {
-  text-decoration: none;
-  color: blue;
-}
-
-.link:hover {
-  color: green;
-}
-</style>
+<script setup>
+// сюда не писать лейауты, они хендлятся в routes.js. Если нужно передавать пропсы в лейаут - тоже в routes.js
+</script>
