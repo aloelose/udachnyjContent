@@ -8,7 +8,7 @@ class Child extends Model
 {
     protected $fillable = [
         'user_id', 
-        'full_name',
+        'name',
         'age',
         'gender',
         'status',

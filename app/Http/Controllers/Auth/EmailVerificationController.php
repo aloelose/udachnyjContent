@@ -34,8 +34,8 @@ class EmailVerificationController extends Controller
             event(new Verified($user));
             $password = Str::random(8);
             $user->update(['password' => Hash::make($password)]);
-            $fullName = $user->fullName;
-            Mail::to($user->email)->send(new PasswordMail($password, $fullName));
+            $name = $user->name;
+            Mail::to($user->email)->send(new PasswordMail($password, $name));
         }
         return response()->json([
             'message' => 'Email verified successfully.',

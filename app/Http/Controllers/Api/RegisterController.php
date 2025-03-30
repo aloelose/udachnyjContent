@@ -17,13 +17,13 @@ class RegisterController extends Controller
     public function __invoke(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'full_name' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'email' => 'required|string|email|unique:users,email',
             'phone_number' => 'required|string|max:20',
-            'child_full_name' => 'required|string|max:100',
+            'child_name' => 'required|string|max:100',
             'child_age' => 'required|integer|min:1|max:18',
             'child_status' => 'required|string|max:50',
-            'child_pmpk_code' => 'required|string|max:50',
+            'child_pmpk_code' => 'required|string|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -43,14 +43,14 @@ class RegisterController extends Controller
         }
         $password = Str::random(8);
         $user = User::create([
-            'full_name' => $request->full_name,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => encrypt($password),
             'phone_number' => $request->phone_number,
         ]);
         $child = Child::create([
             'user_id' => $user->id,
-            'full_name' => $request->child_full_name,
+            'name' => $request->child_name,
             'age' => $request->child_age,
             'status' => $request->child_status,
             'pmpk_code' => $request->child_pmpk_code,

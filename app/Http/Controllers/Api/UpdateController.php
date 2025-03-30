@@ -15,7 +15,7 @@ class UpdateController extends Controller
 
         // Валидация входящих данных
         $validator = \Validator::make($request->all(), [
-            'full_name' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'email' => [
                 'required',
                 'string',
@@ -23,7 +23,7 @@ class UpdateController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'phone_number' => 'required|string|max:20',
-            'child_full_name' => 'required|string|max:100',
+            'child_name' => 'required|string|max:100',
             'child_age' => 'required|integer|min:1|max:18',
             'child_status' => 'required|string|max:50',
             'child_pmpk_code' => 'required|string|max:100',
@@ -55,13 +55,13 @@ class UpdateController extends Controller
         
         
         $user->update([
-            'full_name' => $request->full_name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
         ]);
         if ($user->child) {
             $user->child->update([
-                'full_name' => $request->child_full_name,
+                'name' => $request->child_name,
                 'age' => $request->child_age,
                 'status' => $request->child_status,
                 'pmpk_code' => $request->child_pmpk_code,

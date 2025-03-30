@@ -32,6 +32,9 @@
 <script>
 import PhotoSwipe from 'photoswipe';
 import 'photoswipe/style.css';
+import { useProgressionStore } from 'stores/progressionStore';
+
+const ProgressionStore = useProgressionStore();
 export default {
   components: {
 
@@ -54,6 +57,7 @@ export default {
     },
     markAsCompleted(video) {
       this.$emit("lessonCompleted", video.id);
+      ProgressionStore.refreshProgressionData();
     },
 
     initPhotoswipe(video) {

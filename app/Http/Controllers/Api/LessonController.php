@@ -13,7 +13,6 @@ class LessonController extends Controller
     {
         $user = $request->user();
         $availableLessons = Lesson::where('available_at', '<=', now())
-            ->orderBy('order')
             ->get();
         return response()->json(['available_lessons' => $availableLessons]);
     }
@@ -49,7 +48,7 @@ class LessonController extends Controller
     }
     public function getAllLessons()
     {
-        $lessons = Lesson::orderBy('order')->get();
+        $lessons = Lesson::get();
         return response()->json(['all_lessons' => $lessons]);
     }
 }

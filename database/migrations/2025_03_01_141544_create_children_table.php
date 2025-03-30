@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('children', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Связь с пользователем (родителем)
-            $table->string('full_name'); // ФИО ребёнка
+            $table->string('name'); // ФИО ребёнка
             $table->integer('age'); // Возраст ребёнка
             $table->enum('status', ['Ребёнок-инвалид', 'Ребёнок с ОВЗ']); // Статус ребёнка
             $table->string('pmpk_code')->nullable(); // Шифр по ПМПК

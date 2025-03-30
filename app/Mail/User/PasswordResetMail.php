@@ -14,12 +14,12 @@ class PasswordResetMail extends Mailable
     use Queueable, SerializesModels;
 
     public $code;
-    public $fullName;
+    public $name;
 
-    public function __construct($code, $fullName)
+    public function __construct($code, $name)
     {
         $this->code = $code;
-        $this->fullName = $fullName;
+        $this->name = $name;
     }
 
     /**

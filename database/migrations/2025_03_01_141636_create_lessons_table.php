@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->string('link')->nullable(); 
-            $table->integer('order');
-            $table->timestamp('available_at')->nullable();
+            $table->timestamp('available_at');
             $table->timestamps();
         });
     }

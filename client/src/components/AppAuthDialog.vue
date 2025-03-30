@@ -3,6 +3,8 @@ import { ref, reactive, computed, onUnmounted } from 'vue';
 import { api } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
+import { useUserStore } from 'stores/userStore';
+const userStore = useUserStore();
 const router = useRouter();
 const $q = useQuasar();
 defineOptions({
@@ -90,7 +92,8 @@ const loginApi = {
             if (code === 200) {
                 const token = response.data.token;
                 localStorage.setItem('authToken', token);
-                $q.notify({
+                userStore.refreshUserData();
+                $q.notify({ 
                     color: 'uc_green',
                     message: 'Вы успешно вошли в аккаунт!',
                     icon: 'check'
@@ -144,10 +147,10 @@ const signinApi = {
         signinForm: ref(false)
     },
     formFields: reactive({
-      full_name: form1_parent_fio,
+      name: form1_parent_fio,
       email: form1_login,
       phone_number: form1_phoneNumber,
-      child_full_name: form1_child_fio,
+      child_name: form1_child_fio,
       child_age: form1_child_age,
       child_status: form1_diagnosis_status,
       child_pmpk_code: form1_diagnosis_cipher,
@@ -172,10 +175,10 @@ const signinApi = {
         signinApi.loadingStates.value.signin = true;
         try {
             const requestData = {
-                full_name: signinApi.formFields.full_name,
+                name: signinApi.formFields.name,
                 email: signinApi.formFields.email,
                 phone_number: signinApi.formFields.phone_number,
-                child_full_name: signinApi.formFields.child_full_name,
+                child_name: signinApi.formFields.child_name,
                 child_age: signinApi.formFields.child_age,
                 child_status: signinApi.formFields.child_status,
                 child_pmpk_code: signinApi.formFields.child_pmpk_code

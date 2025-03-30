@@ -29,9 +29,9 @@ class PasswordResetController extends Controller
             ]);
         }
         $code = rand(100000, 999999);
-        $fullName = $user->fullName;
+        $name = $user->name;
         Cache::put('password_reset_' . $user->email, $code, now()->addMinutes(10));
-        Mail::to($user->email)->send(new PasswordResetMail($code, $fullName));
+        Mail::to($user->email)->send(new PasswordResetMail($code, $name));
         return response()->json([
             'message' => 'Код для сброса пароля отправлен на вашу почту.',
             'code' => 200,

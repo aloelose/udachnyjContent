@@ -30,6 +30,7 @@ export const useUserStore = defineStore('user', {
         const response = await api.get('/info', {
           headers: { Authorization: `Bearer ${token}` }
         });
+        console.log(response)
         if (response.data?.user && response.data?.child) {
           this.setUserData(response.data);
           localStorage.setItem('userData', JSON.stringify(response.data));
@@ -57,9 +58,9 @@ export const useUserStore = defineStore('user', {
       this.child = child;
       this.login = user.email;
       this.phoneNumber = user.phone_number;
-      this.child_fio = child.full_name;
+      this.child_fio = child.name;
       this.child_age = child.age;
-      this.parent_fio = user.full_name;
+      this.parent_fio = user.name;
       this.diagnosis_status = child.status;
       this.diagnosis_cipher = child.pmpk_code;
     }

@@ -3,6 +3,10 @@ import { ref, computed, reactive, onMounted, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { useUserStore } from 'stores/userStore';
+import { useProgressionStore } from 'stores/progressionStore';
+
+const userStore = useUserStore();
+const progressionStore = useProgressionStore();
 const $q = useQuasar();
 const dense = false;
 const isPasswordVisble_1 = ref(true);
@@ -31,14 +35,17 @@ const diagnosis_cipher_options = [
   'ЧF83 (Смешанные специфические расстройства психологического развития)',
   'F84 (Общие расстройства психологического развития – РАС)'
 ];
-const token = localStorage.getItem('authToken'); 
-const userStore = useUserStore();
 
 onMounted(() => {
+  // Загрузка данных пользователя
   userStore.loadUserData($q);
-  updateTicketProgression();
+
+  // Загрузка прогресса
+  progressionStore.loadProgressionData($q);
 });
+
 watchEffect(() => {
+  // Синхронизация данных с состоянием в store
   login.value = userStore.login;
   phoneNumber.value = userStore.phoneNumber;
   child_fio.value = userStore.child_fio;
@@ -47,6 +54,17 @@ watchEffect(() => {
   diagnosis_status.value = userStore.diagnosis_status;
   diagnosis_cipher.value = userStore.diagnosis_cipher;
 });
+
+// Используем данные из стора
+const ticketProgression = computed(() => progressionStore.ticketProgression);
+const isTicketFullyUnlocked = computed(() => ticketProgression.value === 12);
+const blocks = computed(() =>
+  Array.from({ length: 12 }, (_, i) => ({
+    id: i,
+    locked: i >= ticketProgression.value,
+    progress: i < ticketProgression.value ? 100 : 0
+  }))
+);
 
 const redactUserDataApi = {
   formRefs: {
@@ -81,9 +99,9 @@ const redactUserDataApi = {
     try {
         const requestData = {
             email: login.value,
-            full_name: parent_fio.value,
+            name: parent_fio.value,
             phone_number: phoneNumber.value,
-            child_full_name: child_fio.value,
+            child_name: child_fio.value,
             child_age: child_age.value,
             child_status: diagnosis_status.value,
             child_pmpk_code: diagnosis_cipher.value,
@@ -93,7 +111,7 @@ const redactUserDataApi = {
         };
         const response = await api.put('/user/update', requestData, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${localStorage.getItem('authToken')}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -142,36 +160,6 @@ const redactUserDataApi = {
       }
   }
 };
-
-const ticketProgression = ref(0); // 0-12 (0 = all locked, 12 = all unlocked)
-const updateTicketProgression = async () => {
-  try {
-    const response = await api.get('/lessons/completed', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    if (response.data) {
-      ticketProgression.value = response.data.completed_lessons.length;
-    }
-  } catch (error) {
-    console.error('Ошибка при получении списка пройденных уроков:', error);
-  }
-};
-const isTicketFullyUnlocked = computed(() => ticketProgression.value === 12);
-const blocks = computed(() =>
-  Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    locked: i >= ticketProgression.value,
-    progress: i < ticketProgression.value ? 100 : 0
-  }))
-);
-
-// Example of how you would update the progression later:
-// function updateProgressionFromServer(newValue) {
-//   ticketProgression.value = Math.min(Math.max(newValue, 0), 12);
-// }
 </script>
 
 <template>
