@@ -38,21 +38,21 @@ export default defineConfig((/* ctx */) => {
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'
-      // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: '/public/dist/spa',
       // analyze: true,
       // env: {},
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,
-      // distDir
-
+      extendViteConf(viteConf) {
+        viteConf.base = './'
+      },
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
 

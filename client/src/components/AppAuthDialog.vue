@@ -83,11 +83,13 @@ const loginApi = {
                 email: loginApi.formFields.userEmail,
                 password: loginApi.formFields.password,
             };
+            console.log(requestData);
             const response = await api.post('/login', requestData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log(response);
             const { code, message } = response.data;
             if (code === 200) {
                 const token = response.data.token;
@@ -183,11 +185,13 @@ const signinApi = {
                 child_status: signinApi.formFields.child_status,
                 child_pmpk_code: signinApi.formFields.child_pmpk_code
             };
+            console.log(requestData);
             const response = await api.post('/register', requestData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log(response);
             const { code, message } = response.data;
             if (code === 201) {
                 $q.notify({
@@ -195,7 +199,8 @@ const signinApi = {
                     message: "Аккаунт зарегестрирован, подтверьте свою почту",
                     icon: 'check'
                 });
-                router.push({ name: 'LKPage' });
+                dialogRef.clo
+                showLogin.value = true; 
             } else {
                 $q.notify({
                     color: 'negative',

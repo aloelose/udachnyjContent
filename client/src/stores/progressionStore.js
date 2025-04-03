@@ -15,7 +15,6 @@ export const useProgressionStore = defineStore('progression', {
           return;
         }
 
-        // Загружаем данные из кэша
         const cachedData = localStorage.getItem('progressionData');
         if (cachedData) {
           const parsedData = JSON.parse(cachedData);
@@ -23,7 +22,6 @@ export const useProgressionStore = defineStore('progression', {
           return;
         }
 
-        // Если данных нет в кэше, загружаем с сервера
         const response = await api.get('/lessons/completed', {
           headers: { Authorization: `Bearer ${token}` },
         });

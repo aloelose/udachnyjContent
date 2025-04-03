@@ -24,7 +24,7 @@ import vClickOutside from 'click-outside-vue3'
 import LkCourseSpoiler from 'src/components/lk/LkCourseSpoiler.vue';
 import { api } from 'src/boot/axios';
 
-const CACHE_DURATION = 60 * 60 * 1000;
+const CACHE_DURATION = 0 * 1000;
 
 export default {
   components: {

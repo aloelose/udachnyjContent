@@ -1,29 +1,42 @@
-import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
 
-// Be careful when using SSR for cross-request state pollution
-// due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
-// "export default () => {}" function below (which runs individually
-// for each client)
 const api = axios.create({
-  baseURL: "http://localhost:8000/api", // Укажи свой адрес сервера
+  baseURL: 'https://xn----8sblvt6a5a7a.online/api',
+  withCredentials: true,
   headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export default defineBoot(({ app }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
-
-  app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
-  app.config.globalProperties.$api = api
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //       so you can easily perform requests against your app's API
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
 })
+
+function getCsrfToken() {
+  const metaTag = document.querySelector('meta[name="csrf-token"]')
+  return metaTag ? metaTag.content : null
+}
+
+api.interceptors.request.use(config => {
+  const token = getCsrfToken()
+  if (token && !config.url?.includes('/sanctum/csrf-cookie')) {
+    config.headers['X-XSRF-TOKEN'] = token
+  }
+  return config
+}, error => {
+  return Promise.reject(error)
+})
+
+api.interceptors.response.use(response => response, async error => {
+  if (error.response?.status === 419) {
+    await axios.get('https://xn----8sblvt6a5a7a.online/api/sanctum/csrf-cookie', {
+      withCredentials: true
+    })
+    return api(error.config)
+  }
+  return Promise.reject(error)
+})
+
+export default ({ app }) => {
+  app.config.globalProperties.$axios = axios
+  app.config.globalProperties.$api = api
+}
 
 export { api }
